@@ -10,3 +10,4 @@
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Debug/net9.0/refint/TravelAgent.Core.dll
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Debug/net9.0/TravelAgent.Core.pdb
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Debug/net9.0/ref/TravelAgent.Core.dll
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Debug/net9.0/TravelAgent.Core.sourcelink.json

@@ -169,9 +169,9 @@ class TravelAgentChat {
                                     messageDiv = this.createMessageDiv(content, 'assistant');
                                     this.messagesContainer.appendChild(messageDiv);
                                 } else {
-                                    // Update existing message with proper formatting
+                                    // Update existing message - simple text content
                                     const textDiv = messageDiv.querySelector('.message-text');
-                                    textDiv.innerHTML = this.formatMessageContent(content);
+                                    textDiv.textContent = content;
                                 }
                                 
                                 this.scrollToBottom();
@@ -206,13 +206,8 @@ class TravelAgentChat {
         const textDiv = document.createElement('div');
         textDiv.className = 'message-text';
         
-        // Format the content properly for display
-        if (sender === 'assistant') {
-            console.log('Formatting assistant message');
-            textDiv.innerHTML = this.formatMessageContent(content);
-        } else {
-            textDiv.textContent = content;
-        }
+        // Simply use textContent - no formatting needed!
+        textDiv.textContent = content;
         
         const timeDiv = document.createElement('div');
         timeDiv.className = 'message-time';
@@ -258,48 +253,6 @@ class TravelAgentChat {
         setTimeout(() => {
             this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
         }, 100);
-    }
-
-    formatMessageContent(content) {
-        console.log('Formatting content:', content.substring(0, 100) + '...');
-        
-        // Convert markdown-like formatting to HTML
-        let formatted = content
-            // Escape any existing HTML first
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            // Convert line breaks to HTML
-            .replace(/\n/g, '<br>')
-            // Convert markdown headers (make sure to handle ### before ##)
-            .replace(/^### (.*$)/gim, '<h4>$1</h4>')
-            .replace(/^## (.*$)/gim, '<h3>$1</h3>')
-            .replace(/^# (.*$)/gim, '<h2>$1</h2>')
-            // Convert bold text (handle ** before *)
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            // Convert italic text  
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            // Convert markdown lists (lines starting with - or *)
-            .replace(/^[-*]\s+(.+)$/gim, '<li>$1</li>');
-        
-        // Wrap consecutive <li> elements in <ul> tags
-        formatted = formatted.replace(/(?:<li>.*?<\/li>)(?:\s*<br>\s*<li>.*?<\/li>)*/g, function(match) {
-            // Remove <br> tags between list items
-            const cleanedMatch = match.replace(/<br>\s*(?=<li>)/g, '');
-            return '<ul>' + cleanedMatch + '</ul>';
-        });
-        
-        // Clean up extra line breaks around headers and lists
-        formatted = formatted
-            .replace(/<br>\s*(<h[2-4]>)/g, '$1')
-            .replace(/(<\/h[2-4]>)\s*<br>/g, '$1')
-            .replace(/<br>\s*(<ul>)/g, '$1')
-            .replace(/(<\/ul>)\s*<br>/g, '$1')
-            // Remove multiple consecutive <br> tags
-            .replace(/(<br>\s*){2,}/g, '<br><br>');
-        
-        console.log('Formatted result:', formatted.substring(0, 200) + '...');
-        return formatted;
     }
 
     clearSession() {

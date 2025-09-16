@@ -303,61 +303,8 @@ body {
 
 .message-text {
     word-wrap: break-word;
+    white-space: pre-wrap;
     line-height: 1.5;
-}
-
-/* Override white-space for assistant messages to allow HTML rendering */
-.message.assistant .message-text {
-    white-space: normal;
-}
-
-/* Formatting for AI responses */
-.message-text h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 1rem 0 0.5rem 0;
-    color: var(--text-primary);
-}
-
-.message-text h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0.8rem 0 0.4rem 0;
-    color: var(--text-primary);
-}
-
-.message-text h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin: 0.6rem 0 0.3rem 0;
-    color: var(--text-secondary);
-}
-
-.message-text ul {
-    margin: 0.5rem 0;
-    padding-left: 1.2rem;
-}
-
-.message-text li {
-    margin: 0.2rem 0;
-    list-style-type: disc;
-}
-
-.message-text strong {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.message-text em {
-    font-style: italic;
-    color: var(--text-secondary);
-}
-
-/* Remove top margin from first heading */
-.message-text h2:first-child,
-.message-text h3:first-child,
-.message-text h4:first-child {
-    margin-top: 0;
 }
 
 .message-time {

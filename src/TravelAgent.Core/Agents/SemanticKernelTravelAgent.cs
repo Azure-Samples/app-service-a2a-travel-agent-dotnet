@@ -197,17 +197,6 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
         {
             await EnsureAgentsInitializedAsync();
 
-            // First yield a processing indicator
-            responses.Add(new AgentResponse
-            {
-                Content = "Processing your request...",
-                Type = "notice",
-                IsPartial = true,
-                IsTaskComplete = false,
-                RequireUserInput = false,
-                AgentName = "TravelManagerAgent"
-            });
-
             var chatHistory = new ChatHistory();
             chatHistory.AddUserMessage(userInput);
             var chunks = new List<string>();
