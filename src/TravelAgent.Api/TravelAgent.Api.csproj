@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>travelo-agent-api-secrets</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.30.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.30.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.30.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.30.0-alpha" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0-beta.2" />
+    <PackageReference Include="OpenAI" Version="2.1.0-beta.2" />
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <!-- A2A Protocol integration - will need to check for .NET SDK availability -->
+    <!-- <PackageReference Include="A2A.NET" Version="1.0.0" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TravelAgent.Core\TravelAgent.Core.csproj" />
+  </ItemGroup>
+
+</Project>

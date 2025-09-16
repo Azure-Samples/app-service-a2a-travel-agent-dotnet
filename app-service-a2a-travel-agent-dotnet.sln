@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgent.Api", "src\TravelAgent.Api\TravelAgent.Api.csproj", "{324212BA-FD9C-164A-7C3D-69CC015E7453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgent.Core", "src\TravelAgent.Core\TravelAgent.Core.csproj", "{E041B689-F201-C614-5A5F-B6305FCE8B0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{324212BA-FD9C-164A-7C3D-69CC015E7453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324212BA-FD9C-164A-7C3D-69CC015E7453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{324212BA-FD9C-164A-7C3D-69CC015E7453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324212BA-FD9C-164A-7C3D-69CC015E7453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E041B689-F201-C614-5A5F-B6305FCE8B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E041B689-F201-C614-5A5F-B6305FCE8B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E041B689-F201-C614-5A5F-B6305FCE8B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E041B689-F201-C614-5A5F-B6305FCE8B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{324212BA-FD9C-164A-7C3D-69CC015E7453} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{E041B689-F201-C614-5A5F-B6305FCE8B0B} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA281ED7-8A29-4C44-89B3-522FA4BF27A7}
+	EndGlobalSection
+EndGlobal

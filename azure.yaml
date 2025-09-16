@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: travel-agent-dotnet
+metadata:
+  template: travel-agent-dotnet@0.0.1-beta
+
+services:
+  web:
+    project: ./src/TravelAgent.Api
+    language: csharp
+    host: appservice
+
+hooks:
+  postdeploy:
+    windows:
+      shell: pwsh
+      run: |
+        echo "Deployment completed successfully!"
+        echo "Application URL: $Env:AZURE_APP_SERVICE_URL"
+    posix:
+      shell: sh
+      run: |
+        echo "Deployment completed successfully!"
+        echo "Application URL: $AZURE_APP_SERVICE_URL"

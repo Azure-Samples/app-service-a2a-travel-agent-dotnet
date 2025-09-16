@@ -1,0 +1,12 @@
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/bin/Release/net9.0/TravelAgent.Core.deps.json
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/bin/Release/net9.0/TravelAgent.Core.dll
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/bin/Release/net9.0/TravelAgent.Core.pdb
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.csproj.AssemblyReference.cache
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.AssemblyInfoInputs.cache
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.AssemblyInfo.cs
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.csproj.CoreCompileInputs.cache
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.dll
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/refint/TravelAgent.Core.dll
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/TravelAgent.Core.pdb
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/Release/net9.0/ref/TravelAgent.Core.dll

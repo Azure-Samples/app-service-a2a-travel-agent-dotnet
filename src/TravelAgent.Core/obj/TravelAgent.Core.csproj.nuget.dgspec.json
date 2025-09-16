@@ -1,0 +1,117 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/TravelAgent.Core.csproj": {}
+  },
+  "projects": {
+    "/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/TravelAgent.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/TravelAgent.Core.csproj",
+        "projectName": "TravelAgent.Core",
+        "projectPath": "/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/TravelAgent.Core.csproj",
+        "packagesPath": "/Users/jordanselig/.nuget/packages/",
+        "outputPath": "/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/jordanselig/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Azure.AI.OpenAI": {
+              "target": "Package",
+              "version": "[2.1.0-beta.2, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.13.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.SemanticKernel": {
+              "target": "Package",
+              "version": "[1.30.0, )"
+            },
+            "Microsoft.SemanticKernel.Agents.Core": {
+              "target": "Package",
+              "version": "[1.30.0-alpha, )"
+            },
+            "Microsoft.SemanticKernel.Connectors.AzureOpenAI": {
+              "target": "Package",
+              "version": "[1.30.0, )"
+            },
+            "Microsoft.SemanticKernel.Connectors.OpenAI": {
+              "target": "Package",
+              "version": "[1.30.0, )"
+            },
+            "OpenAI": {
+              "target": "Package",
+              "version": "[2.1.0-beta.2, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
