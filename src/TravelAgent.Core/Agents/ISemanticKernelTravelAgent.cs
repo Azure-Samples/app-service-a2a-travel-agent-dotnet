@@ -4,17 +4,16 @@ namespace TravelAgent.Core.Agents;
 
 /// <summary>
 /// Interface for Semantic Kernel Travel Agent.
-/// Defines the contract for travel agent operations.
 /// </summary>
-public interface ISemanticKernelTravelAgent
+public interface ISemanticKernelTravelAgent : IAsyncDisposable
 {
     /// <summary>
-    /// Handle synchronous tasks (equivalent to Python's invoke method).
+    /// Handle synchronous tasks.
     /// </summary>
-    Task<AgentResponse> InvokeAsync(string userInput, string sessionId);
+    Task<Models.AgentResponse> InvokeAsync(string userInput, string sessionId = "default");
 
     /// <summary>
-    /// Handle streaming tasks (equivalent to Python's stream method).
+    /// Handle streaming tasks.
     /// </summary>
-    IAsyncEnumerable<AgentResponse> StreamAsync(string userInput, string sessionId);
+    IAsyncEnumerable<Models.AgentResponse> StreamAsync(string userInput, string sessionId = "default");
 }

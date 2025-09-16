@@ -43,7 +43,7 @@ public class HealthController : ControllerBase
             { 
                 status = "unhealthy", 
                 service = "semantic-kernel-travel-agent-dotnet",
-                error = ex.Message,
+                error = "Health check failed",
                 timestamp = DateTime.UtcNow
             });
         }
@@ -66,9 +66,9 @@ public class HealthController : ControllerBase
                 await _chatCompletionService.GetChatCompletionServiceAsync();
                 aiServiceConfigured = true;
             }
-            catch (Exception ex)
+            catch
             {
-                aiServiceError = ex.Message;
+                aiServiceError = "Configuration error";
             }
 
             return Ok(new 
@@ -90,7 +90,7 @@ public class HealthController : ControllerBase
             { 
                 status = "unhealthy", 
                 service = "semantic-kernel-travel-agent-dotnet",
-                error = ex.Message,
+                error = "Health check failed",
                 timestamp = DateTime.UtcNow
             });
         }

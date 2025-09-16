@@ -18,7 +18,6 @@ namespace TravelAgent.Core.Agents;
 /// <summary>
 /// Semantic Kernel Travel Agent implementation.
 /// Wraps Semantic Kernel-based agents to handle travel-related tasks.
-/// Equivalent to Python's SemanticKernelTravelAgent class.
 /// </summary>
 public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
 {
@@ -31,8 +30,10 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
     private ChatCompletionAgent? _agent;
     private AgentGroupChat? _groupChat;
     private readonly Dictionary<string, AgentGroupChat> _sessions = new();
+    private readonly List<Kernel> _kernels = new(); // Track kernels for disposal
+    private bool _disposed;
 
-    // Supported content types (equivalent to Python's SUPPORTED_CONTENT_TYPES)
+    // Supported content types
     private static readonly string[] SupportedContentTypes = { "text", "text/plain" };
 
     public SemanticKernelTravelAgent(
@@ -47,9 +48,6 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
         _logger = logger;
         _loggerFactory = loggerFactory;
         _httpClient = httpClient;
-        
-        // Don't initialize agents in constructor - do it lazily when needed
-        // This prevents startup failures due to missing configuration
     }
 
     /// <summary>
@@ -71,11 +69,13 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
             var mainBuilder = Kernel.CreateBuilder();
             mainBuilder.Services.AddSingleton<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService>(chatService);
             var mainKernel = mainBuilder.Build();
+            _kernels.Add(mainKernel);
 
             // Create currency kernel with plugin
             var currencyBuilder = Kernel.CreateBuilder();
             currencyBuilder.Services.AddSingleton<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService>(chatService);
             var currencyKernel = currencyBuilder.Build();
+            _kernels.Add(currencyKernel);
             
             var currencyPlugin = new CurrencyPlugin(_httpClient, _loggerFactory.CreateLogger<CurrencyPlugin>());
             currencyKernel.ImportPluginFromObject(currencyPlugin, "CurrencyPlugin");
@@ -84,6 +84,7 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
             var activityBuilder = Kernel.CreateBuilder();
             activityBuilder.Services.AddSingleton<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService>(chatService);
             var activityKernel = activityBuilder.Build();
+            _kernels.Add(activityKernel);
 
             // Currency Exchange Agent (equivalent to Python's CurrencyExchangeAgent)
             var currencyExchangeAgent = new ChatCompletionAgent
@@ -277,7 +278,6 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
 
     /// <summary>
     /// Ensure session exists for the given session ID.
-    /// Equivalent to Python's _ensure_thread_exists method.
     /// </summary>
     private async Task EnsureSessionExistsAsync(string sessionId)
     {
@@ -285,12 +285,42 @@ public class SemanticKernelTravelAgent : ISemanticKernelTravelAgent
         {
             if (_agent != null)
             {
-                // Create new group chat session (equivalent to Python's thread creation)
+                // Create new group chat session
                 _sessions[sessionId] = new AgentGroupChat(_agent);
                 _logger.LogInformation("Created new session {SessionId}", sessionId);
             }
         }
 
         await Task.CompletedTask; // Placeholder for any async session initialization
+    }
+
+    /// <summary>
+    /// Dispose of resources properly.
+    /// </summary>
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed)
+            return;
+
+        try
+        {
+            // Clear kernels (Kernel doesn't implement IDisposable but we can clear the collection)
+            _kernels.Clear();
+
+            // Clear sessions
+            _sessions.Clear();
+            _agent = null;
+            _groupChat = null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error disposing SemanticKernelTravelAgent");
+        }
+        finally
+        {
+            _disposed = true;
+        }
+
+        await Task.CompletedTask;
     }
 }

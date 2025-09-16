@@ -8,7 +8,6 @@ namespace TravelAgent.Api.Controllers;
 
 /// <summary>
 /// Chat controller for travel agent interactions.
-/// Equivalent to Python's chat.py router with FastAPI endpoints.
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -17,9 +16,9 @@ public class ChatController : ControllerBase
     private readonly ISemanticKernelTravelAgent _travelAgent;
     private readonly ILogger<ChatController> _logger;
     
-    // In-memory session store (equivalent to Python's active_sessions Dict)
-    // In production, use Redis or database
-    private static readonly ConcurrentDictionary<string, string> ActiveSessions = new();
+    // In-memory session store - in production, use Redis or database
+    private static readonly ConcurrentDictionary<string, DateTime> ActiveSessions = new();
+    private static readonly Timer SessionCleanupTimer = new(CleanupExpiredSessions, null, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
 
     public ChatController(ISemanticKernelTravelAgent travelAgent, ILogger<ChatController> logger)
     {
@@ -27,22 +26,44 @@ public class ChatController : ControllerBase
         _logger = logger;
     }
 
+    private static void CleanupExpiredSessions(object? state)
+    {
+        var expiredSessions = ActiveSessions
+            .Where(kvp => DateTime.UtcNow - kvp.Value > TimeSpan.FromHours(2))
+            .Select(kvp => kvp.Key)
+            .ToList();
+
+        foreach (var sessionId in expiredSessions)
+        {
+            ActiveSessions.TryRemove(sessionId, out _);
+        }
+    }
+
     /// <summary>
     /// Send a message to the travel agent and get a response.
-    /// Equivalent to Python's send_message endpoint.
     /// </summary>
     [HttpPost("message")]
     public async Task<ActionResult<ChatResponse>> SendMessage([FromBody] ChatMessage chatMessage)
     {
+        // Input validation
+        if (chatMessage == null)
+            return BadRequest(new { error = "Request body cannot be null" });
+            
+        if (string.IsNullOrWhiteSpace(chatMessage.Message))
+            return BadRequest(new { error = "Message cannot be empty" });
+            
+        if (chatMessage.Message.Length > 4000)
+            return BadRequest(new { error = "Message too long. Maximum 4000 characters allowed" });
+
         try
         {
-            // Generate session ID if not provided (equivalent to Python's session ID generation)
+            // Generate session ID if not provided
             var sessionId = chatMessage.SessionId ?? Guid.NewGuid().ToString();
 
-            // Store session (equivalent to Python's active_sessions[session_id] = session_id)
-            ActiveSessions.TryAdd(sessionId, sessionId);
+            // Store session with timestamp
+            ActiveSessions.TryAdd(sessionId, DateTime.UtcNow);
 
-            // Get response from agent (equivalent to Python's travel_agent.invoke)
+            // Get response from agent
             var response = await _travelAgent.InvokeAsync(chatMessage.Message, sessionId);
 
             return Ok(new ChatResponse
@@ -56,33 +77,47 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error processing chat message");
-            return StatusCode(500, new { error = ex.Message });
+            return StatusCode(500, new { error = "An error occurred while processing your request" });
         }
     }
 
     /// <summary>
     /// Stream a response from the travel agent.
-    /// Equivalent to Python's stream_message endpoint.
     /// </summary>
     [HttpPost("stream")]
     public async Task StreamMessage([FromBody] ChatMessage chatMessage)
     {
+        // Input validation
+        if (chatMessage == null || string.IsNullOrWhiteSpace(chatMessage.Message))
+        {
+            Response.StatusCode = 400;
+            await Response.WriteAsync("data: {\"error\": \"Invalid message\"}\n\n");
+            return;
+        }
+        
+        if (chatMessage.Message.Length > 4000)
+        {
+            Response.StatusCode = 400;
+            await Response.WriteAsync("data: {\"error\": \"Message too long\"}\n\n");
+            return;
+        }
+
         try
         {
             // Generate session ID if not provided
             var sessionId = chatMessage.SessionId ?? Guid.NewGuid().ToString();
 
-            // Store session
-            ActiveSessions.TryAdd(sessionId, sessionId);
+            // Store session with timestamp
+            ActiveSessions.TryAdd(sessionId, DateTime.UtcNow);
 
-            // Set response headers for streaming (equivalent to Python's StreamingResponse headers)
+            // Set response headers for streaming
             Response.ContentType = "text/plain";
             Response.Headers["Cache-Control"] = "no-cache";
             Response.Headers["Connection"] = "keep-alive";
             Response.Headers["Access-Control-Allow-Origin"] = "*";
             Response.Headers["Access-Control-Allow-Headers"] = "*";
 
-            // Stream responses (equivalent to Python's generate_response async generator)
+            // Stream responses
             await foreach (var partial in _travelAgent.StreamAsync(chatMessage.Message, sessionId))
             {
                 var responseData = new
@@ -93,7 +128,6 @@ public class ChatController : ControllerBase
                     requires_input = partial.RequireUserInput
                 };
 
-                // Format as SSE (Server-Sent Events) - equivalent to Python's yield f"data: {response_data}\n\n"
                 var jsonData = JsonSerializer.Serialize(responseData);
                 await Response.WriteAsync($"data: {jsonData}\n\n");
                 await Response.Body.FlushAsync();
@@ -105,37 +139,38 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error setting up streaming");
-            var errorData = JsonSerializer.Serialize(new { error = ex.Message });
+            var errorData = JsonSerializer.Serialize(new { error = "An error occurred while streaming the response" });
             await Response.WriteAsync($"data: {errorData}\n\n");
         }
     }
 
     /// <summary>
     /// Get list of active chat sessions.
-    /// Equivalent to Python's get_active_sessions endpoint.
     /// </summary>
     [HttpGet("sessions")]
     public ActionResult<object> GetActiveSessions()
     {
         try
         {
-            var sessions = ActiveSessions.Keys.ToArray();
-            return Ok(new { sessions, count = sessions.Length });
+            var sessionCount = ActiveSessions.Count;
+            return Ok(new { count = sessionCount });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error retrieving active sessions");
-            return StatusCode(500, new { error = ex.Message });
+            return StatusCode(500, new { error = "Unable to retrieve sessions" });
         }
     }
 
     /// <summary>
     /// Delete a specific chat session.
-    /// Equivalent to Python's delete session endpoint.
     /// </summary>
     [HttpDelete("sessions/{sessionId}")]
     public ActionResult DeleteSession(string sessionId)
     {
+        if (string.IsNullOrWhiteSpace(sessionId))
+            return BadRequest(new { error = "Session ID cannot be empty" });
+            
         try
         {
             if (ActiveSessions.TryRemove(sessionId, out _))
@@ -149,7 +184,7 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error deleting session {SessionId}", sessionId);
-            return StatusCode(500, new { error = ex.Message });
+            return StatusCode(500, new { error = "Unable to delete session" });
         }
     }
 }

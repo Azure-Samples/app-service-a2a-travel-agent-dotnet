@@ -60,6 +60,7 @@
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/TravelAgent.Api.pdb
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/TravelAgent.Api.genruntimeconfig.cache
 /Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/ref/TravelAgent.Api.dll
-/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/jnfulto45x-ptwtk010q5.gz
-/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/yge9gevlje-vakl7hocwo.gz
-/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/km4bosp0e6-c34gfadirf.gz
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/TravelAgent.Api.sourcelink.json
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/jnfulto45x-6swsgx3611.gz
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/yge9gevlje-jr3hywobrh.gz
+/Users/jordanselig/workspace/app-service-a2a-travel-agent-dotnet/src/TravelAgent.Api/obj/Release/net9.0/compressed/km4bosp0e6-qsw82i7c2p.gz

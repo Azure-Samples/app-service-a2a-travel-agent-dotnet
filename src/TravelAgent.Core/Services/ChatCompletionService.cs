@@ -31,13 +31,11 @@ public class ChatCompletionService : IChatCompletionService
 
     /// <summary>
     /// Get Azure OpenAI chat completion service with managed identity support.
-    /// Equivalent to Python's _get_azure_openai_chat_completion_service.
     /// </summary>
-    public Task<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService> GetChatCompletionServiceAsync()
+    public async Task<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService> GetChatCompletionServiceAsync()
     {
         // Return Azure OpenAI service by default
-        return Task.FromResult<Microsoft.SemanticKernel.ChatCompletion.IChatCompletionService>(
-            GetAzureOpenAIServiceAsync().Result);
+        return await GetAzureOpenAIServiceAsync();
     }
 
     public Task<AzureOpenAIChatCompletionService> GetAzureOpenAIServiceAsync()
