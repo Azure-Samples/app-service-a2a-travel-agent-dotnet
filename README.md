@@ -11,8 +11,6 @@ This is a .NET replica of the Azure Travel Agent sample application. The applica
 
 ## Quick Deployment
 
-### Option 1: Using Azure Developer CLI (azd)
-
 1. Initialize azd environment:
    ```bash
    azd init
@@ -28,32 +26,9 @@ This will:
 - Configure role assignments for secure access
 - Deploy the .NET application
 
-### Option 2: Manual Deployment
-
-1. Deploy infrastructure:
-   ```bash
-   az deployment group create \
-     --resource-group <your-resource-group> \
-     --template-file infra/main.bicep \
-     --parameters environmentName=<env-name> location=<location>
-   ```
-
-2. Build and deploy the application:
-   ```bash
-   dotnet publish src/TravelAgent.Api/TravelAgent.Api.csproj -c Release -o publish
-   az webapp deployment source config-zip \
-     --resource-group <your-resource-group> \
-     --name <app-service-name> \
-     --src publish.zip
-   ```
-
 ## Configuration
 
 The application uses managed identity for secure access to Azure OpenAI. No API keys are stored in configuration.
-
-Required app settings (automatically configured via Bicep):
-- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI service endpoint
-- `AZURE_CLIENT_ID`: Managed identity client ID (optional)
 
 ## Features
 
@@ -74,28 +49,37 @@ Required app settings (automatically configured via Bicep):
 
 ## Local Development
 
-1. Set up local configuration in `appsettings.Development.json`:
-   ```json
-   {
-     "AzureOpenAI": {
-       "Endpoint": "https://your-openai.openai.azure.com/",
-       "DeploymentName": "gpt-35-turbo"
-     }
-   }
+### ⚠️ Prerequisites for Chat Functionality
+
+**The chat will not work without Azure OpenAI configured first!** You need:
+
+1. **Deploy an Azure OpenAI resource** in your Azure subscription
+2. **Deploy a GPT model** (e.g., `gpt-4`, `gpt-35-turbo`) in your OpenAI resource  
+3. **Set the required environment variables** (see below)
+
+If you deploy the provided azd template, these will be set automatically in your App Service and you can find the environment variables in the Azure Portal under your App Service's Environment Variables. These needed values are in the following section.
+
+### Running Locally
+
+1. **Set environment variables** with your Azure OpenAI details:
+   ```bash
+   export AZURE_OPENAI_ENDPOINT="https://your-openai-resource.openai.azure.com/"
+   export AZURE_OPENAI_DEPLOYMENT_NAME="your-gpt-model-deployment-name"  
+   export AZURE_OPENAI_API_VERSION="2025-04-14"
    ```
 
-2. Ensure you're authenticated with Azure CLI:
+2. **Ensure you're authenticated** with Azure CLI (for managed identity):
    ```bash
    az login
    ```
 
-3. Run the application:
+3. **Run the application**:
    ```bash
    cd src/TravelAgent.Api
    dotnet run
    ```
 
-The application will be available at `http://localhost:5000`.
+4. **Access the app** at `http://localhost:5000`
 
 ## API Endpoints
 
@@ -106,8 +90,25 @@ The application will be available at `http://localhost:5000`.
 
 ## Troubleshooting
 
+### Local Development Issues
+
+1. **"AZURE_OPENAI_ENDPOINT is required" error**: 
+   - Set the environment variables listed in Local Development section
+   - Make sure you've deployed an Azure OpenAI resource first
+
+2. **Chat shows "Sorry, I encountered an error"**: 
+   - Verify your Azure OpenAI deployment name matches `AZURE_OPENAI_DEPLOYMENT_NAME`
+   - Check that you're authenticated (`az login`) if not using API key
+   - Ensure your Azure account has access to the OpenAI resource
+
+3. **App starts but chat doesn't respond**: 
+   - Check browser developer console for errors
+   - Verify the API version is compatible with your Azure OpenAI deployment
+
+### Deployment Issues
+
 1. **401 Unauthorized errors**: Ensure managed identity has "Cognitive Services OpenAI User" role
-2. **Deployment failures**: Check that Azure OpenAI is available in your region
-3. **Build errors**: Ensure .NET 8.0 SDK is installed
+2. **Deployment failures**: Check that Azure OpenAI is available in your region  
+3. **Build errors**: Ensure .NET 9.0 SDK is installed
 
 For more details, see the original Python implementation: https://github.com/Azure-Samples/app-service-a2a-travel-agent
