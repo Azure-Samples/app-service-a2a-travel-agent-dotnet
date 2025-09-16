@@ -1,12 +1,17 @@
-# Deployment Instructions
+# Semantic Kernel A2A Travel Agent
 
-This is a .NET replica of the Azure Travel Agent sample application. The application provides an AI-powered travel planning assistant using Azure OpenAI and the Semantic Kernel framework.
+> **🔄 Adapted from Microsoft Sources**  
+> This sample was adapted from the [Microsoft DevBlogs Semantic Kernel A2A Integration article](https://devblogs.microsoft.com/foundry/semantic-kernel-a2a-integration/) and the [A2A Samples repository](https://github.com/a2aproject/a2a-samples/tree/main/samples/python/agents/semantickernel) to run as a single standalone web application on Azure App Service with a modern web interface.
+
+A standalone web application that combines Semantic Kernel AI agents with Google's Agent-to-Agent (A2A) protocol to provide comprehensive travel planning services. This application features a modern web interface and is designed for deployment on Azure App Service.
+
+This is a .NET replica of the Azure Travel Agent sample application. The application provides an AI-powered travel planning assistant using Azure OpenAI and the Semantic Kernel framework. For more details, see the original Python implementation: https://github.com/Azure-Samples/app-service-a2a-travel-agent.
 
 ## Prerequisites
 
 1. Azure CLI installed and configured
 2. Azure subscription with access to Azure OpenAI
-3. .NET 8.0 SDK installed
+3. .NET 9.0 SDK installed
 4. Azure Developer CLI (azd) installed
 
 ## Quick Deployment
